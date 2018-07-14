@@ -71,7 +71,6 @@ func (s *Service) executeHandler(req *mesg.Request) {
 
 func (s *Service) batchExecuteHandler(req *mesg.Request) {
 	var hreq httpBatchRequest
-
 	if err := req.Get(&hreq); err != nil {
 		if err := req.Reply("error", httpErrorResponse{
 			Message: fmt.Sprintf("err while decoding batch input data: %s", err),
@@ -126,7 +125,7 @@ func (s *Service) doPOSTRequest(hreq httpRequest, responseC chan response) {
 		return
 	}
 
-	resp.StatusCode = fmt.Sprintf("%d", statusCode)
+	resp.StatusCode = statusCode
 	responseC <- resp
 }
 
@@ -136,7 +135,7 @@ type httpRequest struct {
 }
 
 type httpSuccessResponse struct {
-	StatusCode string      `json:"statusCode"`
+	StatusCode int         `json:"statusCode"`
 	Body       interface{} `json:"body"`
 }
 
@@ -159,7 +158,7 @@ type httpBatchResponseBody struct {
 
 type response struct {
 	URL        string
-	StatusCode string
+	StatusCode int
 	Body       interface{}
 	Error      error
 }

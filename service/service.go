@@ -12,12 +12,6 @@ import (
 	"github.com/ilgooz/service-webman/webman"
 )
 
-type ServiceProvider interface {
-	ListenTasks(task mesg.Task, tasks ...mesg.Task) error
-	EmitEvent(name string, data interface{}) error
-	Close() error
-}
-
 type Application interface {
 	Post(url string, data, out interface{}) (statusCode int, err error)
 	StartWebhook(endpoint, addr string, h func(*http.Request) error) error
@@ -26,7 +20,7 @@ type Application interface {
 
 // Service represents the microservice.
 type Service struct {
-	mesgService ServiceProvider
+	mesgService *mesg.Service
 	webman      Application
 
 	log       *log.Logger
@@ -86,9 +80,9 @@ func LogOutputOption(out io.Writer) Option {
 	}
 }
 
-func serviceProviderOption(provider ServiceProvider) Option {
+func mesgServiceOption(service *mesg.Service) Option {
 	return func(s *Service) {
-		s.mesgService = provider
+		s.mesgService = service
 	}
 }
 

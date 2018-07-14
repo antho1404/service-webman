@@ -28,7 +28,7 @@ tasks:
         data:
           statusCode:
             description: 'http status code of the response'
-            type: String
+            type: Number
           body:
             description: 'body of the response'
             type: String
