@@ -1,0 +1,64 @@
+name: Webman
+description: 'Cool way of http requests'
+events:
+  onRequest:
+    description: onRequest
+    data:
+      date:
+        description: now
+        type: Number
+      id:
+        description: 'a uuid'
+        type: String
+      body:
+        description: 'body of the http request'
+        type: Object
+tasks:
+  execute:
+    inputs:
+      url:
+        description: 'url to request'
+        type: String
+      body:
+        description: 'data to send'
+        type: String
+    outputs:
+      success:
+        description: success
+        data:
+          statusCode:
+            description: 'http status code of the response'
+            type: String
+          body:
+            description: 'body of the response'
+            type: String
+      error:
+        description: error
+        data:
+          message:
+            description: message
+            type: String
+  batchExecute:
+    inputs:
+      batch:
+        description: 'batch requests'
+        type: Object
+    outputs:
+      batch:
+        description: batch
+        data:
+          successes:
+            description: successes
+            type: Object
+          errors:
+            description: errors
+            type: Object
+      error:
+        description: error
+        data:
+          message:
+            description: message
+            type: String
+configuration:
+  ports:
+    - '4000'
